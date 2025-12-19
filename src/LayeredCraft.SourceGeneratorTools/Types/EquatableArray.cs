@@ -67,16 +67,6 @@ public readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnume
     /// <exception cref="IndexOutOfRangeException">The index is out of range.</exception>
     public T this[int index] => (_array ?? [])[index];
 
-    /// <summary>Gets the element at the specified index.</summary>
-    /// <param name="index">The index of the element to get.</param>
-    /// <returns>The element at the specified index.</returns>
-    public T this[Index index] => AsSpan()[index];
-
-    /// <summary>Gets a slice of elements specified by the range.</summary>
-    /// <param name="range">The range of elements to get.</param>
-    /// <returns>A span of elements in the specified range.</returns>
-    public ReadOnlySpan<T> this[Range range] => AsSpan()[range];
-
     /// <summary>Checks whether two <see cref="EquatableArray{T}" /> values are the same.</summary>
     /// <param name="left">The first <see cref="EquatableArray{T}" /> value.</param>
     /// <param name="right">The second <see cref="EquatableArray{T}" /> value.</param>
