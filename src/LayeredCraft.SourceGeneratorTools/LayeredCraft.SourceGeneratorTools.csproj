@@ -15,4 +15,8 @@
   <PropertyGroup>
     <PolySharpUsePublicAccessibilityForGeneratedTypes>true</PolySharpUsePublicAccessibilityForGeneratedTypes>
   </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="LayeredCraft.SourceGeneratorTools.UnitTests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
 </Project>
