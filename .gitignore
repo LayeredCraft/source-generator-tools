@@ -56,3 +56,5 @@ nunit-*.xml
 .idea
 
 **/*DotSettings.user
+
+**/*.env
