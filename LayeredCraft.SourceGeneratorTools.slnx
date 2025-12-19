@@ -1,3 +1,14 @@
 <Solution>
-  <Project Path="src/LayeredCraft.SourceGeneratorTools/LayeredCraft.SourceGeneratorTools.csproj" />
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/LayeredCraft.SourceGeneratorTools/LayeredCraft.SourceGeneratorTools.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/LayeredCraft.SourceGeneratorTools.UnitTests/LayeredCraft.SourceGeneratorTools.UnitTests.csproj" />
+  </Folder>
 </Solution>
