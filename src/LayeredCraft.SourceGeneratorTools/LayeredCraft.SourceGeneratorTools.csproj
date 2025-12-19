@@ -6,16 +6,8 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="PolySharp">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="System.Collections.Immutable" />
   </ItemGroup>
-  <PropertyGroup>
-    <PolySharpUsePublicAccessibilityForGeneratedTypes>true</PolySharpUsePublicAccessibilityForGeneratedTypes>
-    <PolySharpIncludeGeneratedTypes>System.Index;System.Range;System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute;System.Diagnostics.CodeAnalysis.NotNullWhenAttribute</PolySharpIncludeGeneratedTypes>
-  </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="LayeredCraft.SourceGeneratorTools.UnitTests" />
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
