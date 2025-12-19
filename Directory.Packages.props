@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enable Central Package Management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="PolySharp" Version="1.15.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="System.Collections.Immutable" Version="10.0.1" />
+  </ItemGroup>
+</Project>
