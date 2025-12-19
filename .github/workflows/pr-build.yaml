@@ -13,9 +13,6 @@ jobs:
       hasTests: true
       useMtpRunner: true
       testDirectory: "test"
-      dotnetVersion: |
-        8.0.x
-        9.0.x
-        10.0.x
+      dotnetVersion: 10.0.x
       runCdk: false
     secrets: inherit
