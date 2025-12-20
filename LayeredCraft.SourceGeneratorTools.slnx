@@ -3,10 +3,12 @@
     <Project Path="examples/LayeredCraft.SourceGeneratorTools.BasicExample/LayeredCraft.SourceGeneratorTools.BasicExample.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
     <File Path="LICENSE" />
     <File Path="README.md" />
+    <File Path="taskfile.yaml" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/LayeredCraft.SourceGeneratorTools.Generator/LayeredCraft.SourceGeneratorTools.Generator.csproj" />
