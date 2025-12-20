@@ -29,5 +29,6 @@ internal static class GeneratorConstants
                 "Tools/Utilities/HashCode.cs",
             ]
         ),
+        ["HashCode"] = new GeneratableFeature("EquatableArray", ["Tools/Utilities/HashCode.cs"]),
     };
 }

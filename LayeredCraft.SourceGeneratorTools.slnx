@@ -16,5 +16,6 @@
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/LayeredCraft.SourceGeneratorTools.UnitTests/LayeredCraft.SourceGeneratorTools.UnitTests.csproj" />
+    <Project Path="test\LayeredCraft.SourceGeneratorTools.Generator.UnitTests\LayeredCraft.SourceGeneratorTools.Generator.UnitTests.csproj" />
   </Folder>
 </Solution>
