@@ -14,8 +14,4 @@
     <InternalsVisibleTo Include="LayeredCraft.SourceGeneratorTools.UnitTests" />
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="False" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="False" />
-  </ItemGroup>
 </Project>

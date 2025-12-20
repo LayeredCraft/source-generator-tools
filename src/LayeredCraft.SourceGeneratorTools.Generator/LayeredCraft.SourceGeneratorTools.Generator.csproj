@@ -19,10 +19,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="False" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="False" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource
       Include="..\LayeredCraft.SourceGeneratorTools\**\*.cs"
@@ -36,13 +33,36 @@
   <PropertyGroup>
     <!-- Disable PolySharp's ModuleInitializerAttribute shim -->
     <PolySharpExcludeGeneratedTypes>System.Runtime.CompilerServices.ModuleInitializerAttribute</PolySharpExcludeGeneratedTypes>
+    <!-- Suppress dependency/content warnings for source generator packaging -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <IncludeSymbols>false</IncludeSymbols>
   </PropertyGroup>
+
+  <!-- Pack the generator DLL into the analyzers folder -->
   <ItemGroup>
+    <!-- Using @(IntermediateAssembly) is more reliable than $(OutputPath) -->
     <None
-      Include="$(OutputPath)\$(AssemblyName).dll"
+      Include="@(IntermediateAssembly)"
       Pack="true"
       PackagePath="analyzers/dotnet/cs"
       Visible="false"
     />
   </ItemGroup>
+
+  <!-- Include analyzer dependencies if needed -->
+  <Target
+    Name="IncludeAnalyzerDependencies"
+    BeforeTargets="_GetPackageFiles"
+    DependsOnTargets="ResolveReferences"
+  >
+    <ItemGroup>
+      <None
+        Include="@(ReferencePath)"
+        Condition="'%(ReferencePath.NuGetPackageId)' == 'PolySharp'"
+        Pack="true"
+        PackagePath="analyzers/dotnet/cs"
+        Visible="false"
+      />
+    </ItemGroup>
+  </Target>
 </Project>

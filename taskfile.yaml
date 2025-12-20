@@ -1,0 +1,46 @@
+version: '3'
+
+tasks:
+  format:
+    desc: Reformat the solution
+    silent: true
+    cmds:
+      - echo "🎨 Reformatting with CSharpier"
+      - dotnet csharpier format .
+      - echo "✅ Reformatted successfully"
+  
+  clean:
+    desc: Clean NuGet packages from Release folder
+    silent: true
+    cmds:
+      - echo "🧹 Cleaning"
+      - '[ -d ./nupkg ] && rm -r ./nupkg || true'
+      - dotnet clean --configuration Release
+      - echo "✅ Cleaning complete"
+  
+  restore:
+    desc: Restore NuGet dependencies
+    silent: true
+    deps: [ clean ]
+    cmds:
+      - echo "📥 Restoring dependencies"
+      - dotnet restore
+      - echo "✅ Dependencies restored"
+
+  build:
+    desc: Build solution in Release configuration
+    silent: true
+    deps: [ restore ]
+    cmds:
+      - echo "🔨 Building Release"
+      - dotnet build --configuration Release --no-restore
+      - echo "✅ Release build complete"
+  
+  pack:
+    desc: Build the NuGet package
+    silent: true
+    deps: [ build ]
+    cmds:
+      - echo "📦 Packing Packages"
+      - dotnet pack --configuration Release --no-build --output ./nupkg
+      - echo "✅ Packed"
