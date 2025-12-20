@@ -4,6 +4,8 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
+    <PackageId>LayeredCraft.SourceGeneratorTools</PackageId>
+    <Description>A collection of helpers and tools for working with source generators</Description>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" />
