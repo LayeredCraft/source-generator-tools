@@ -1,7 +1,5 @@
 version: '3'
 
-dotenv: [ '.env' ]
-
 tasks:
   format:
     desc: Reformat the solution
@@ -46,12 +44,3 @@ tasks:
       - echo "📦 Packing Packages"
       - dotnet pack --configuration Release --no-build --output ./nupkg
       - echo "✅ Packed"
-  
-  publish:
-    desc: Publish the package to NuGet
-    silent: true
-    deps: [ pack ]
-    cmds:
-      - echo "🚀 Publishing all packages"
-      - dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_KEY --skip-duplicate
-      - echo "✨ All packages published successfully!"
