@@ -40,9 +40,8 @@
 
   <!-- Pack the generator DLL into the analyzers folder -->
   <ItemGroup>
-    <!-- Using @(IntermediateAssembly) is more reliable than $(OutputPath) -->
     <None
-      Include="@(IntermediateAssembly)"
+      Include="$(OutputPath)\$(AssemblyName).dll"
       Pack="true"
       PackagePath="analyzers/dotnet/cs"
       Visible="false"
