@@ -12,9 +12,27 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="PolySharp">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="False" />
     <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="False" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource
+      Include="..\LayeredCraft.SourceGeneratorTools\**\*.cs"
+      Exclude="..\LayeredCraft.SourceGeneratorTools\obj\**;
+                           ..\LayeredCraft.SourceGeneratorTools\bin\**;
+                           ..\LayeredCraft.SourceGeneratorTools\.vs\**"
+    >
+      <Link>Tools\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <!-- Disable PolySharp's ModuleInitializerAttribute shim -->
+    <PolySharpExcludeGeneratedTypes>System.Runtime.CompilerServices.ModuleInitializerAttribute</PolySharpExcludeGeneratedTypes>
+  </PropertyGroup>
 </Project>

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace LayeredCraft.SourceGeneratorTools.Types;
+namespace LayeredCraft.SourceGeneratorTools.Utilities;
 
 /// <summary>Polyfill for .NET 6 HashCode</summary>
-internal struct HashCode
+public struct HashCode
 {
     private static readonly uint s_seed = GenerateGlobalSeed();
 
