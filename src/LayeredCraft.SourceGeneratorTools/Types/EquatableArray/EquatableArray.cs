@@ -6,6 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
+// ReSharper disable RedundantNameQualifier
+
 namespace LayeredCraft.SourceGeneratorTools.Types;
 
 /// <summary>
@@ -37,7 +39,7 @@ public readonly struct EquatableArray<T> : IEquatable<EquatableArray<T>>, IEnume
         if (_array is not T[] array)
             return 0;
 
-        HashCode hashCode = default;
+        LayeredCraft.SourceGeneratorTools.Utilities.HashCode hashCode = default;
 
         foreach (var item in array)
             hashCode.Add(item);

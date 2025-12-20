@@ -1,6 +1,6 @@
 using AwesomeAssertions;
 using JetBrains.Annotations;
-using HashCode = LayeredCraft.SourceGeneratorTools.Types.HashCode;
+using HashCode = LayeredCraft.SourceGeneratorTools.Utilities.HashCode;
 
 namespace LayeredCraft.SourceGeneratorTools.UnitTests.Types;
 

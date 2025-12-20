@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference
+      Include="..\..\src\LayeredCraft.SourceGeneratorTools.Generator\LayeredCraft.SourceGeneratorTools.Generator.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer"
+    />
+  </ItemGroup>
+</Project>

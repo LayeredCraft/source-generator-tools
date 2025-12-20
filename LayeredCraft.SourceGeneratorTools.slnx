@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/LayeredCraft.SourceGeneratorTools.BasicExample/LayeredCraft.SourceGeneratorTools.BasicExample.csproj" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
@@ -6,6 +9,7 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="src/LayeredCraft.SourceGeneratorTools.Generator/LayeredCraft.SourceGeneratorTools.Generator.csproj" />
     <Project Path="src/LayeredCraft.SourceGeneratorTools/LayeredCraft.SourceGeneratorTools.csproj" />
   </Folder>
   <Folder Name="/test/">
