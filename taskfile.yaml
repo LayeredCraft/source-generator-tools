@@ -1,16 +1,29 @@
 version: '3'
 
+dotenv: [ '.env' ]
+
 tasks:
   format:
     desc: Reformat the solution
     silent: true
+    cmds:
       - echo "🎨 Reformatting with CSharpier"
       - dotnet csharpier format .
       - echo "✅ Reformatted successfully"
   
+  clean:
+    desc: Clean NuGet packages from Release folder
+    silent: true
+    cmds:
+      - echo "🧹 Cleaning"
+      - '[ -d ./nupkg ] && rm -r ./nupkg || true'
+      - dotnet clean --configuration Release
+      - echo "✅ Cleaning complete"
+  
   restore:
     desc: Restore NuGet dependencies
     silent: true
+    deps: [ clean ]
     cmds:
       - echo "📥 Restoring dependencies"
       - dotnet restore
@@ -34,3 +47,11 @@ tasks:
       - dotnet pack --configuration Release --no-build --output ./nupkg
       - echo "✅ Packed"
   
+  publish:
+    desc: Publish the package to NuGet
+    silent: true
+    deps: [ pack ]
+    cmds:
+      - echo "🚀 Publishing all packages"
+      - dotnet nuget push ./nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_KEY --skip-duplicate
+      - echo "✨ All packages published successfully!"

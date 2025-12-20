@@ -57,6 +57,6 @@ nunit-*.xml
 
 **/*DotSettings.user
 
-**/*.env
+**/.env
 
 ./nupkg
