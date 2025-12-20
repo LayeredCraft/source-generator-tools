@@ -8,7 +8,6 @@
     <IsTestProject>true</IsTestProject>
     <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
-    <RootNamespace>LayeredCraft.SourceGeneratorTools.Generator</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
