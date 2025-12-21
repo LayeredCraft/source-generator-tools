@@ -6,10 +6,16 @@ namespace LayeredCraft.SourceGeneratorTools.Generator.UnitTests;
 public class SourceGeneratorToolsGeneratorTests
 {
     [Fact]
-    public async Task Initialize_GeneratesOutput() =>
+    public async Task Initialize_GeneratesOutput() => await GeneratorTestHelpers.Verify();
+
+    [Fact]
+    public async Task Initialize_SourceGeneratorToolsUsePublicModifier_GeneratesOutputWithPublic() =>
         await GeneratorTestHelpers.Verify(
             optionsProvider: new TestAnalyzerConfigOptionsProvider(
-                new Dictionary<string, string> { ["key"] = "value" }
+                new Dictionary<string, string>
+                {
+                    ["build_property.SourceGeneratorToolsUsePublicModifier"] = "true",
+                }
             )
         );
 }

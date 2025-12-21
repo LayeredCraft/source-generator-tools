@@ -18,7 +18,7 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
     {
         // Get the MSBuild property (cached)
         var compilationOptions = context.AnalyzerConfigOptionsProvider.Select(
-            (provider, _) =>
+            static (provider, _) =>
             {
                 provider.GlobalOptions.TryGetValue(
                     "build_property.SourceGeneratorToolsInclude",
@@ -40,10 +40,10 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
         // Only generate static content if condition is met
         context.RegisterSourceOutput(
             compilationOptions,
-            (ctx, compilationOptions) =>
+            static (ctx, compilationOptions) =>
             {
                 // get inclusions
-                var inclusions = compilationOptions.Include is null
+                var inclusions = compilationOptions.Include is not null
                     ? compilationOptions.Include!.Split(
                         [';'],
                         StringSplitOptions.RemoveEmptyEntries
@@ -51,7 +51,7 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                     : [];
 
                 // get exclusions
-                var exclusions = compilationOptions.Exclude is null
+                var exclusions = compilationOptions.Exclude is not null
                     ? compilationOptions.Exclude!.Split(
                         [';'],
                         StringSplitOptions.RemoveEmptyEntries
@@ -70,10 +70,11 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                 else
                     featureKeys = GeneratorConstants.AllFeatures;
 
-                // get all file references
+                // get all district file references
                 var filePaths = featureKeys
                     .Where(GeneratorConstants.Features.ContainsKey)
                     .SelectMany(key => GeneratorConstants.Features[key])
+                    .Distinct()
                     .ToList();
 
                 var assembly = typeof(SourceGeneratorToolsGenerator).Assembly;

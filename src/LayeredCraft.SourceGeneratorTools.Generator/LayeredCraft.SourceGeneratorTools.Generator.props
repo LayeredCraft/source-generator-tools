@@ -1,10 +1,7 @@
 <Project>
-  <PropertyGroup>
-    <EmitCompilerVisibleProperty>
-      $(EmitCompilerVisibleProperty);
-      SourceGeneratorToolsInclude;
-      SourceGeneratorToolsExclude;
-      SourceGeneratorToolsUsePublicModifier
-    </EmitCompilerVisibleProperty>
-  </PropertyGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="SourceGeneratorToolsInclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsExclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsUsePublicModifier" />
+  </ItemGroup>
 </Project>

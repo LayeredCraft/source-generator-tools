@@ -14,8 +14,13 @@
       OutputItemType="Analyzer"
     />
   </ItemGroup>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="SourceGeneratorToolsInclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsExclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsUsePublicModifier" />
+  </ItemGroup>
   <PropertyGroup>
-    <SourceGeneratorToolsInclude></SourceGeneratorToolsInclude>
+    <SourceGeneratorToolsInclude>HashCode</SourceGeneratorToolsInclude>
     <SourceGeneratorToolsExclude></SourceGeneratorToolsExclude>
     <SourceGeneratorToolsUsePublicModifier>true</SourceGeneratorToolsUsePublicModifier>
   </PropertyGroup>
