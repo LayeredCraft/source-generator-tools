@@ -60,3 +60,6 @@ nunit-*.xml
 **/.env
 
 ./nupkg
+
+# for verify test snapshots
+*.received.*

@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <CompilerVisibleProperty Include="SourceGeneratorToolsInclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsExclude" />
+    <CompilerVisibleProperty Include="SourceGeneratorToolsUsePublicModifier" />
+  </ItemGroup>
+</Project>

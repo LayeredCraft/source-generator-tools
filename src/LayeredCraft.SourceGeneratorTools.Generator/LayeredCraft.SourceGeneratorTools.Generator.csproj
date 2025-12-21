@@ -64,4 +64,16 @@
       />
     </ItemGroup>
   </Target>
+  <ItemGroup>
+    <None
+      Include="LayeredCraft.SourceGeneratorTools.Generator.props"
+      Pack="true"
+      PackagePath="build"
+    />
+    <None
+      Include="LayeredCraft.SourceGeneratorTools.Generator.props"
+      Pack="true"
+      PackagePath="buildTransitive"
+    />
+  </ItemGroup>
 </Project>

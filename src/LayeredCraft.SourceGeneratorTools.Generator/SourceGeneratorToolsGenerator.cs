@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 
@@ -13,24 +14,74 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
     private const string NoReplaceComment = "// no-replace";
     private const int PublicModifierLength = 6;
 
-    public void Initialize(IncrementalGeneratorInitializationContext context) =>
-        context.RegisterPostInitializationOutput(ctx =>
-        {
-            // For now, hardcode to EquatableArray - in the future this could be configurable
-            var featureKeys = new[] { "EquatableArray" };
-
-            var assembly = typeof(SourceGeneratorToolsGenerator).Assembly;
-
-            foreach (var featureKey in featureKeys)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        // Get the MSBuild property (cached)
+        var compilationOptions = context.AnalyzerConfigOptionsProvider.Select(
+            static (provider, _) =>
             {
-                if (!GeneratorConstants.Features.TryGetValue(featureKey, out var feature))
-                    continue;
+                provider.GlobalOptions.TryGetValue(
+                    "build_property.SourceGeneratorToolsInclude",
+                    out var include
+                );
+                provider.GlobalOptions.TryGetValue(
+                    "build_property.SourceGeneratorToolsExclude",
+                    out var exclude
+                );
+                provider.GlobalOptions.TryGetValue(
+                    "build_property.SourceGeneratorToolsUsePublicModifier",
+                    out var usePublic
+                );
 
-                // Get the assembly namespace for resource lookup
+                return new CompilationOptions(include, exclude, bool.Parse(usePublic ?? "false"));
+            }
+        );
+
+        // Only generate static content if condition is met
+        context.RegisterSourceOutput(
+            compilationOptions,
+            static (ctx, compilationOptions) =>
+            {
+                // get inclusions
+                var inclusions = compilationOptions.Include is not null
+                    ? compilationOptions.Include!.Split(
+                        [';'],
+                        StringSplitOptions.RemoveEmptyEntries
+                    )
+                    : [];
+
+                // get exclusions
+                var exclusions = compilationOptions.Exclude is not null
+                    ? compilationOptions.Exclude!.Split(
+                        [';'],
+                        StringSplitOptions.RemoveEmptyEntries
+                    )
+                    : [];
+
+                // logic:
+                // 1. if include is set, only those items are added and exclude is ignored.
+                // 2. if exclude is set, all items is taken as base and excluded items are removed.
+                // 3. default is all items
+                string[]? featureKeys = null;
+                if (inclusions.Length > 0)
+                    featureKeys = inclusions.Distinct().ToArray();
+                else if (exclusions.Length > 0)
+                    featureKeys = GeneratorConstants.AllFeatures.Except(exclusions).ToArray();
+                else
+                    featureKeys = GeneratorConstants.AllFeatures;
+
+                // get all district file references
+                var filePaths = featureKeys
+                    .Where(GeneratorConstants.Features.ContainsKey)
+                    .SelectMany(key => GeneratorConstants.Features[key])
+                    .Distinct()
+                    .ToList();
+
+                var assembly = typeof(SourceGeneratorToolsGenerator).Assembly;
                 var assemblyNamespace = assembly.GetName().Name;
 
                 // Load each file path specified in the feature
-                foreach (var filePath in feature.FolderPaths)
+                foreach (var filePath in filePaths)
                 {
                     // Convert file path to embedded resource name (add assembly namespace and
                     // replace / with .)
@@ -40,7 +91,9 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                     if (stream == null)
                         continue;
 
-                    var content = ConvertPublicToInternal(stream);
+                    var content = compilationOptions.UsePublicModifier
+                        ? new StreamReader(stream).ReadToEnd()
+                        : ConvertPublicToInternal(stream);
 
                     // Extract filename from the path
                     var fileName = Path.GetFileName(filePath);
@@ -51,7 +104,8 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                     ctx.AddSource(generatedFileName, source);
                 }
             }
-        });
+        );
+    }
 
     /// <summary>
     ///     Sets any line that starts with "public" to be "internal". This only impacts top-level
