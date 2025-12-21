@@ -36,4 +36,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\LayeredCraft.SourceGeneratorTools.Generator\LayeredCraft.SourceGeneratorTools.Generator.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Snapshots\" />
+  </ItemGroup>
 </Project>

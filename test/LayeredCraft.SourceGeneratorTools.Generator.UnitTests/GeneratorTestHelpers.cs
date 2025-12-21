@@ -1,20 +1,20 @@
-using AwesomeAssertions;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-
 namespace LayeredCraft.SourceGeneratorTools.Generator.UnitTests;
 
 internal static class GeneratorTestHelpers
 {
-    internal static Task Verify(string source, int expectedTrees = 1)
+    internal static Task Verify(
+        string source = "",
+        AnalyzerConfigOptionsProvider? optionsProvider = null
+    )
     {
-        var (driver, originalCompilation) = GenerateFromSource(source);
+        var (driver, originalCompilation) = GenerateFromSource(
+            source,
+            optionsProvider: optionsProvider
+        );
 
         driver.Should().NotBeNull();
 
         var result = driver.GetRunResult();
-
-        // result.Diagnostics.Length.Should().Be(0);s
 
         // Reparse generated trees with the same parse options as the original compilation
         // to ensure consistent syntax tree features (e.g., InterceptorsNamespaces)
@@ -43,31 +43,37 @@ internal static class GeneratorTestHelpers
                     )
             );
 
-        result.GeneratedTrees.Length.Should().Be(expectedTrees);
-
         return Verifier.Verify(driver).UseDirectory("Snapshots").DisableDiff();
     }
 
-    internal static (GeneratorDriver driver, Compilation compilation) GenerateFromSource(
-        string source,
-        Dictionary<string, ReportDiagnostic>? diagnosticsToSuppress = null
+    private static (GeneratorDriver driver, Compilation compilation) GenerateFromSource(
+        string source = "",
+        Dictionary<string, ReportDiagnostic>? diagnosticsToSuppress = null,
+        AnalyzerConfigOptionsProvider? optionsProvider = null
     )
     {
-        IEnumerable<KeyValuePair<string, string>> features =
-        [
-            new("InterceptorsNamespaces", "MinimalLambda"),
-        ];
-
-        var parseOptions = CSharpParseOptions
-            .Default.WithLanguageVersion(LanguageVersion.CSharp14)
-            .WithFeatures(features);
+        var parseOptions = CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.CSharp14);
 
         var syntaxTree = CSharpSyntaxTree.ParseText(source, parseOptions, "InputFile.cs");
 
-        List<MetadataReference> references = [];
+        // Add necessary references for generated code to compile
+        // Get all referenced assemblies from the current assembly to ensure we have all required
+        // types
+        var referencedAssemblies = typeof(GeneratorTestHelpers)
+            .Assembly.GetReferencedAssemblies()
+            .Select(System.Reflection.Assembly.Load)
+            .Where(a => a.GetName().Name?.StartsWith("System") == true)
+            .Select(a => MetadataReference.CreateFromFile(a.Location))
+            .ToList();
+
+        List<MetadataReference> references =
+        [
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location), // System.Private.CoreLib
+            .. referencedAssemblies,
+        ];
 
         var compilationOptions = new CSharpCompilationOptions(
-            OutputKind.ConsoleApplication,
+            OutputKind.DynamicallyLinkedLibrary,
             nullableContextOptions: NullableContextOptions.Enable
         );
 
@@ -86,6 +92,11 @@ internal static class GeneratorTestHelpers
         var generator = new SourceGeneratorToolsGenerator().AsSourceGenerator();
 
         var driver = CSharpGeneratorDriver.Create(generator);
+
+        if (optionsProvider is not null)
+            driver = (CSharpGeneratorDriver)
+                driver.WithUpdatedAnalyzerConfigOptions(optionsProvider);
+
         var updatedDriver = driver.RunGenerators(compilation, CancellationToken.None);
 
         return (updatedDriver, compilation);
