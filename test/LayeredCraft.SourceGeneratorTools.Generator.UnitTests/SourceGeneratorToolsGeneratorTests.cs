@@ -52,4 +52,17 @@ public class SourceGeneratorToolsGeneratorTests
                 }
             )
         );
+
+    [Fact]
+    public async Task Initialize_EmptyOptions_GeneratesOutput() =>
+        await GeneratorTestHelpers.Verify(
+            optionsProvider: new TestAnalyzerConfigOptionsProvider(
+                new Dictionary<string, string>
+                {
+                    ["build_property.SourceGeneratorToolsInclude"] = "",
+                    ["build_property.SourceGeneratorToolsExclude"] = "",
+                    ["build_property.SourceGeneratorToolsUsePublicModifier"] = "",
+                }
+            )
+        );
 }

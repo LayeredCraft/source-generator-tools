@@ -33,7 +33,7 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                     out var usePublic
                 );
 
-                return new CompilationOptions(include, exclude, bool.Parse(usePublic ?? "false"));
+                return new CompilationOptions(include, exclude, usePublic);
             }
         );
 
@@ -42,6 +42,10 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
             compilationOptions,
             static (ctx, compilationOptions) =>
             {
+                // get use public
+                var usePublic =
+                    bool.TryParse(compilationOptions.UsePublicModifier, out var result) && result;
+
                 // get inclusions
                 var inclusions = compilationOptions.Include is not null
                     ? compilationOptions.Include!.Split(
@@ -91,7 +95,7 @@ public class SourceGeneratorToolsGenerator : IIncrementalGenerator
                     if (stream == null)
                         continue;
 
-                    var content = compilationOptions.UsePublicModifier
+                    var content = usePublic
                         ? new StreamReader(stream).ReadToEnd()
                         : ConvertPublicToInternal(stream);
 
