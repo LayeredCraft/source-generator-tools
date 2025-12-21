@@ -1,3 +1,8 @@
+using AwesomeAssertions;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Diagnostics;
+
 namespace LayeredCraft.SourceGeneratorTools.Generator.UnitTests;
 
 internal static class GeneratorTestHelpers

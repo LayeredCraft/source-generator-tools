@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace LayeredCraft.SourceGeneratorTools.Generator.UnitTests;
 
 [TestSubject(typeof(SourceGeneratorToolsGenerator))]
