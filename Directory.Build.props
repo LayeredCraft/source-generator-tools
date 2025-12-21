@@ -31,4 +31,12 @@
     <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="False" />
     <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="False" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'LayeredCraft.SourceGeneratorTools.Generator'">
+    <EmitCompilerVisibleProperty>
+      $(EmitCompilerVisibleProperty);
+      SourceGeneratorToolsInclude;
+      SourceGeneratorToolsExclude;
+      SourceGeneratorToolsUsePublicModifier
+    </EmitCompilerVisibleProperty>
+  </PropertyGroup>
 </Project>

@@ -14,4 +14,9 @@
       OutputItemType="Analyzer"
     />
   </ItemGroup>
+  <PropertyGroup>
+    <SourceGeneratorToolsInclude></SourceGeneratorToolsInclude>
+    <SourceGeneratorToolsExclude></SourceGeneratorToolsExclude>
+    <SourceGeneratorToolsUsePublicModifier>true</SourceGeneratorToolsUsePublicModifier>
+  </PropertyGroup>
 </Project>

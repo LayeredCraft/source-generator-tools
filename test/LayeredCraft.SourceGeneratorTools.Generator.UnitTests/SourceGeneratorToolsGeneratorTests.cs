@@ -6,5 +6,10 @@ namespace LayeredCraft.SourceGeneratorTools.Generator.UnitTests;
 public class SourceGeneratorToolsGeneratorTests
 {
     [Fact]
-    public async Task Initialize_GeneratesOutput() => await GeneratorTestHelpers.Verify();
+    public async Task Initialize_GeneratesOutput() =>
+        await GeneratorTestHelpers.Verify(
+            optionsProvider: new TestAnalyzerConfigOptionsProvider(
+                new Dictionary<string, string> { ["key"] = "value" }
+            )
+        );
 }

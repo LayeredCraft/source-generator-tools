@@ -19,16 +19,16 @@ internal static class GeneratorConstants
 
         """;
 
-    internal static readonly Dictionary<string, GeneratableFeature> Features = new()
+    internal static readonly Dictionary<string, string[]> Features = new()
     {
-        ["EquatableArray"] = new GeneratableFeature(
-            "EquatableArray",
-            [
-                "Tools/Types/EquatableArray/EquatableArray.cs",
-                "Tools/Types/EquatableArray/EquatableArrayExtensions.cs",
-                "Tools/Utilities/HashCode.cs",
-            ]
-        ),
-        ["HashCode"] = new GeneratableFeature("EquatableArray", ["Tools/Utilities/HashCode.cs"]),
+        ["EquatableArray"] =
+        [
+            "Tools/Types/EquatableArray/EquatableArray.cs",
+            "Tools/Types/EquatableArray/EquatableArrayExtensions.cs",
+            "Tools/Utilities/HashCode.cs",
+        ],
+        ["HashCode"] = ["Tools/Utilities/HashCode.cs"],
     };
+
+    internal static readonly string[] AllFeatures = [.. Features.Keys];
 }
