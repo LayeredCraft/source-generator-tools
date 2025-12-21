@@ -10,15 +10,18 @@
 
 #nullable enable
 
+using System.Linq;
 using LayeredCraft.SourceGeneratorTools.Types;
 
 namespace System.Collections.Generic;
 
-/// <summary>Extension methods for creating <see cref="EquatableArray{T}" /> instances.</summary>
+/// <summary>
+/// Extension methods for creating <see cref="EquatableArray{T}"/> instances.
+/// </summary>
 internal static class EquatableArrayExtensions
 {
-    extension<T>
-    private (IEnumerable<T> enumerable) where T : IEquatable<T>
+    extension<T>(IEnumerable<T> enumerable)
+        where T : IEquatable<T>
     {
         /// <summary>
         /// Creates an <see cref="EquatableArray{T}"/> from the provided sequence.

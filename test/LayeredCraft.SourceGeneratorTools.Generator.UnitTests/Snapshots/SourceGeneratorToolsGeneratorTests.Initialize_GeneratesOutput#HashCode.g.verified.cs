@@ -10,6 +10,8 @@
 
 #nullable enable
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -26,9 +28,14 @@ internal struct HashCode
     private const uint Prime4 = 668265263U;
     private const uint Prime5 = 374761393U;
 
-    private uint _v1, _v2, _v3, _v4;
+    private uint _v1,
+        _v2,
+        _v3,
+        _v4;
 
-    private uint _queue1, _queue2, _queue3;
+    private uint _queue1,
+        _queue2,
+        _queue3;
 
     private uint _length;
 
@@ -116,7 +123,11 @@ internal struct HashCode
     }
 
     public static int Combine<T1, T2, T3, T4, T5>(
-        T1 value1, T2 value2, T3 value3, T4 value4, T5 value5
+        T1 value1,
+        T2 value2,
+        T3 value3,
+        T4 value4,
+        T5 value5
     )
     {
         var hc1 = (uint)(value1?.GetHashCode() ?? 0);
@@ -142,7 +153,12 @@ internal struct HashCode
     }
 
     public static int Combine<T1, T2, T3, T4, T5, T6>(
-        T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6
+        T1 value1,
+        T2 value2,
+        T3 value3,
+        T4 value4,
+        T5 value5,
+        T6 value6
     )
     {
         var hc1 = (uint)(value1?.GetHashCode() ?? 0);
@@ -170,7 +186,13 @@ internal struct HashCode
     }
 
     public static int Combine<T1, T2, T3, T4, T5, T6, T7>(
-        T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7
+        T1 value1,
+        T2 value2,
+        T3 value3,
+        T4 value4,
+        T5 value5,
+        T6 value6,
+        T7 value7
     )
     {
         var hc1 = (uint)(value1?.GetHashCode() ?? 0);
@@ -200,7 +222,14 @@ internal struct HashCode
     }
 
     public static int Combine<T1, T2, T3, T4, T5, T6, T7, T8>(
-        T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8
+        T1 value1,
+        T2 value2,
+        T3 value3,
+        T4 value4,
+        T5 value5,
+        T6 value6,
+        T7 value7,
+        T8 value8
     )
     {
         var hc1 = (uint)(value1?.GetHashCode() ?? 0);
@@ -249,8 +278,8 @@ internal struct HashCode
         RotateLeft(hash + queuedValue * Prime3, 17) * Prime4;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static uint MixState(uint v1, uint v2, uint v3, uint v4) => RotateLeft(v1, 1) +
-        RotateLeft(v2, 7) + RotateLeft(v3, 12) + RotateLeft(v4, 18);
+    private static uint MixState(uint v1, uint v2, uint v3, uint v4) =>
+        RotateLeft(v1, 1) + RotateLeft(v2, 7) + RotateLeft(v3, 12) + RotateLeft(v4, 18);
 
     private static uint MixEmptyState() => s_seed + Prime5;
 
@@ -267,9 +296,8 @@ internal struct HashCode
 
     public void Add<T>(T value) => Add(value?.GetHashCode() ?? 0);
 
-    public void Add<T>(T value, IEqualityComparer<T>? comparer) => Add(
-        value is null ? 0 : comparer?.GetHashCode(value) ?? value.GetHashCode()
-    );
+    public void Add<T>(T value, IEqualityComparer<T>? comparer) =>
+        Add(value is null ? 0 : comparer?.GetHashCode(value) ?? value.GetHashCode());
 
     private void Add(int value)
     {

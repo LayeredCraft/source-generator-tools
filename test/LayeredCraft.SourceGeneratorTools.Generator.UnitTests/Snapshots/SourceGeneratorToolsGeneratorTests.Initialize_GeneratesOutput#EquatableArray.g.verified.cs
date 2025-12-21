@@ -13,7 +13,9 @@
 // Code is from
 // https://github.com/andrewlock/StronglyTypedId/blob/master/src/StronglyTypedIds/EquatableArray.cs
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 // ReSharper disable RedundantNameQualifier
