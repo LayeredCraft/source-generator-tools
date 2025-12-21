@@ -18,4 +18,38 @@ public class SourceGeneratorToolsGeneratorTests
                 }
             )
         );
+
+    [Fact]
+    public async Task Initialize_SourceGeneratorToolsIncludeSet_GeneratesOutput() =>
+        await GeneratorTestHelpers.Verify(
+            optionsProvider: new TestAnalyzerConfigOptionsProvider(
+                new Dictionary<string, string>
+                {
+                    ["build_property.SourceGeneratorToolsInclude"] = "HashCode",
+                }
+            )
+        );
+
+    [Fact]
+    public async Task Initialize_SourceGeneratorToolsExcludeSet_GeneratesOutput() =>
+        await GeneratorTestHelpers.Verify(
+            optionsProvider: new TestAnalyzerConfigOptionsProvider(
+                new Dictionary<string, string>
+                {
+                    ["build_property.SourceGeneratorToolsExclude"] = "EquatableArray",
+                }
+            )
+        );
+
+    [Fact]
+    public async Task Initialize_IncludeSupersedesExclude_GeneratesOutput() =>
+        await GeneratorTestHelpers.Verify(
+            optionsProvider: new TestAnalyzerConfigOptionsProvider(
+                new Dictionary<string, string>
+                {
+                    ["build_property.SourceGeneratorToolsInclude"] = "HashCode",
+                    ["build_property.SourceGeneratorToolsExclude"] = "EquatableArray",
+                }
+            )
+        );
 }
