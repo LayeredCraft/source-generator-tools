@@ -63,3 +63,5 @@ nunit-*.xml
 
 # for verify test snapshots
 *.received.*
+
+**/.DS_Store
