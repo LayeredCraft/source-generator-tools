@@ -1,0 +1,34 @@
+namespace Microsoft.CodeAnalysis;
+
+/// <summary>
+///     Provides extension methods for <see cref="IncrementalValuesProvider{T}" /> to simplify
+///     common filtering operations.
+/// </summary>
+public static class CustomIncrementalValueProviderExtensions
+{
+    extension<T>(IncrementalValuesProvider<T?> valueProviders)
+        where T : struct
+    {
+        /// <summary>
+        ///     Filters out null values from an <see cref="IncrementalValuesProvider{T}" /> of nullable
+        ///     value types and returns a provider containing only the non-null values.
+        /// </summary>
+        /// <typeparam name="T">The value type contained in the provider.</typeparam>
+        /// <returns>An <see cref="IncrementalValuesProvider{T}" /> containing only the non-null values.</returns>
+        public IncrementalValuesProvider<T> WhereNotNull() =>
+            valueProviders.Where(static v => v is not null).Select(static (v, _) => v!.Value);
+    }
+
+    extension<T>(IncrementalValuesProvider<T?> valueProviders)
+        where T : class
+    {
+        /// <summary>
+        ///     Filters out null values from an <see cref="IncrementalValuesProvider{T}" /> of nullable
+        ///     reference types and returns a provider containing only the non-null values.
+        /// </summary>
+        /// <typeparam name="T">The reference type contained in the provider.</typeparam>
+        /// <returns>An <see cref="IncrementalValuesProvider{T}" /> containing only the non-null values.</returns>
+        public IncrementalValuesProvider<T> WhereNotNull() =>
+            valueProviders.Where(static v => v is not null).Select(static (v, _) => v!);
+    }
+}

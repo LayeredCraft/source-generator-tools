@@ -8,6 +8,9 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference
       Include="..\..\src\LayeredCraft.SourceGeneratorTools.Generator\LayeredCraft.SourceGeneratorTools.Generator.csproj"
       ReferenceOutputAssembly="false"
@@ -19,9 +22,9 @@
     <CompilerVisibleProperty Include="SourceGeneratorToolsExclude" />
     <CompilerVisibleProperty Include="SourceGeneratorToolsUsePublicModifier" />
   </ItemGroup>
-  <PropertyGroup>
-    <SourceGeneratorToolsInclude>HashCode</SourceGeneratorToolsInclude>
-    <SourceGeneratorToolsExclude></SourceGeneratorToolsExclude>
-    <SourceGeneratorToolsUsePublicModifier>true</SourceGeneratorToolsUsePublicModifier>
-  </PropertyGroup>
+  <!--  <PropertyGroup>-->
+  <!--    <SourceGeneratorToolsInclude>HashCode</SourceGeneratorToolsInclude>-->
+  <!--    <SourceGeneratorToolsExclude></SourceGeneratorToolsExclude>-->
+  <!--    <SourceGeneratorToolsUsePublicModifier>true</SourceGeneratorToolsUsePublicModifier>-->
+  <!--  </PropertyGroup>-->
 </Project>

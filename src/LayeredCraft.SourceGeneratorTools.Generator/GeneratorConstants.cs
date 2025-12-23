@@ -28,6 +28,10 @@ internal static class GeneratorConstants
             "Tools/Utilities/HashCode.cs",
         ],
         ["HashCode"] = ["Tools/Utilities/HashCode.cs"],
+        ["CustomIncrementalValueProviderExtensions"] =
+        [
+            "Tools/Utilities/CustomIncrementalValueProviderExtensions.cs",
+        ],
     };
 
     internal static readonly string[] AllFeatures = [.. Features.Keys];

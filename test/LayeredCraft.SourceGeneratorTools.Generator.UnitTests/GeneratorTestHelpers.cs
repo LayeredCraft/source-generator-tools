@@ -73,8 +73,9 @@ internal static class GeneratorTestHelpers
 
         List<MetadataReference> references =
         [
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location), // System.Private.CoreLib
             .. referencedAssemblies,
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location), // System.Private.CoreLib
+            MetadataReference.CreateFromFile(typeof(IncrementalValuesProvider<>).Assembly.Location),
         ];
 
         var compilationOptions = new CSharpCompilationOptions(

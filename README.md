@@ -133,6 +133,10 @@ When using the source generator package, you can configure its behavior using MS
 - **`HashCode`** - Generates only:
   - `HashCode` utility class (polyfill for `System.HashCode.Combine` on .NET Standard 2.0)
 
+- **`IncrementalValueProviderExtensions`** - Generates extension methods for Roslyn's incremental
+  generators:
+  - `WhereNotNull()` extension for filtering null values from `IncrementalValuesProvider<T?>`
+
 ### Configuration Examples
 
 **Example 1: Include only HashCode polyfill with public accessibility**
@@ -232,6 +236,85 @@ int hash = HashCode.Combine(value1, value2, value3);
 // Use in GetHashCode implementations
 public override int GetHashCode() => HashCode.Combine(Name, Age, Email);
 ```
+
+</details>
+
+<details>
+<summary><strong>IncrementalValueProviderExtensions</strong> - Extension methods for Roslyn's incremental source generators</summary>
+
+### Overview
+
+Extension methods that simplify common filtering operations when working with Roslyn's incremental
+source generator pipeline, specifically for handling nullable value and reference types in
+`IncrementalValuesProvider<T?>`.
+
+### Key Features
+
+- **Automatic null filtering** - Simplifies removing null values from incremental provider pipelines
+- **Type-safe** - Converts `IncrementalValuesProvider<T?>` to `IncrementalValuesProvider<T>`
+- **Support for both value and reference types** - Works with nullable structs and nullable
+  reference types
+- **Zero allocations** - Efficient static delegate-based implementation
+
+### Usage Example
+
+```csharp
+using Microsoft.CodeAnalysis;
+
+public class MyGenerator : IIncrementalGenerator
+{
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        // Filter out null syntax nodes
+        var classDeclarations = context.SyntaxProvider
+            .CreateSyntaxProvider(
+                predicate: static (node, _) => node is ClassDeclarationSyntax,
+                transform: static (ctx, _) => ctx.Node as ClassDeclarationSyntax
+            )
+            .WhereNotNull(); // Filters out nulls and changes type from ClassDeclarationSyntax? to ClassDeclarationSyntax
+
+        // Use the non-null values in your pipeline
+        context.RegisterSourceOutput(classDeclarations, (spc, classDecl) =>
+        {
+            // classDecl is guaranteed to be non-null here
+        });
+    }
+}
+```
+
+### Methods
+
+#### `WhereNotNull()` for Value Types
+
+Filters null values from `IncrementalValuesProvider<T?>` where `T` is a struct:
+
+```csharp
+IncrementalValuesProvider<int?> nullableInts = ...;
+IncrementalValuesProvider<int> nonNullInts = nullableInts.WhereNotNull();
+```
+
+#### `WhereNotNull()` for Reference Types
+
+Filters null values from `IncrementalValuesProvider<T?>` where `T` is a class:
+
+```csharp
+IncrementalValuesProvider<string?> nullableStrings = ...;
+IncrementalValuesProvider<string> nonNullStrings = nullableStrings.WhereNotNull();
+```
+
+> [!IMPORTANT]  
+> When using the **generator version** (`LayeredCraft.SourceGeneratorTools.Generator`),
+> you must also reference `Microsoft.CodeAnalysis.Common` in your project for the
+> `IncrementalValueProviderExtensions` to work properly:
+>
+> ```xml
+> <ItemGroup>
+>   <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
+> </ItemGroup>
+> ```
+>
+> This requirement does **not** apply when using the runtime package
+> (`LayeredCraft.SourceGeneratorTools`), as it already includes the necessary dependencies.
 
 </details>
 
